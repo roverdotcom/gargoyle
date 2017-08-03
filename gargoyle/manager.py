@@ -154,7 +154,7 @@ def make_gargoyle():
     from gargoyle.models import Switch
 
     kwargs = {
-        'key': 'key',
+        'key': getattr(settings, 'GARGOYLE_CACHE_KEY', 'key'),
         'value': 'value',
         'instances': True,
         'auto_create': getattr(settings, 'GARGOYLE_AUTO_CREATE', True),
