@@ -158,6 +158,7 @@ def make_gargoyle():
         'value': 'value',
         'instances': True,
         'auto_create': getattr(settings, 'GARGOYLE_AUTO_CREATE', True),
+        'cache_version': getattr(settings, 'GARGOYLE_CACHE_KEY', '1')
     }
 
     if hasattr(settings, 'GARGOYLE_CACHE_NAME'):
