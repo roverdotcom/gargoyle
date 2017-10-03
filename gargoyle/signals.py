@@ -69,3 +69,14 @@ switch_condition_added = django.dispatch.Signal(providing_args=["request", "swit
 #:      from gargoyle.signals import switch_condition_deleted
 #:      switch_condition_deleted.connect(switch_condition_deleted_callback)
 switch_condition_removed = django.dispatch.Signal(providing_args=["request", "switch", "condition"])
+
+#: This signal is sent when a key is checked for being active.
+#:
+#: Example subscriber::
+#:
+#:      def key_is_active_checked_callback(sender, key, **extra):
+#:          logging.debug('is_active called for key: %s', key)
+#:
+#:      from gargoyle.signals import key_is_active_checked
+#:      key_is_active_checked.connect(key_is_active_checked_callback)
+key_is_active_checked = django.dispatch.Signal(providing_args=["key"])

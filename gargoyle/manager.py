@@ -8,6 +8,7 @@ from django.utils.functional import SimpleLazyObject
 from modeldict import ModelDict
 
 from gargoyle.proxy import SwitchProxy
+from gargoyle.signals import key_is_active_checked
 
 from .constants import DISABLED, EXCLUDE, GLOBAL, INCLUDE, INHERIT, SELECTIVE
 
@@ -44,6 +45,8 @@ class SwitchManager(ModelDict):
         >>> gargoyle.is_active('my_feature', request)
         """
         default = kwargs.pop('default', False)
+
+        key_is_active_checked.send(sender=self, key=key)
 
         # Check all parents for a disabled state
         parts = key.split(':')
