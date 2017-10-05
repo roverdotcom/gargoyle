@@ -168,6 +168,8 @@ def make_gargoyle():
         kwargs['cache'] = caches[settings.GARGOYLE_CACHE_NAME]
     if hasattr(settings, 'GARGOYLE_REMOTE_CACHE_TIMEOUT'):
         kwargs['remote_timeout'] = settings.GARGOYLE_REMOTE_CACHE_TIMEOUT
+    if hasattr(settings, 'GARGOYLE_MAX_LOCAL_TIMEOUT_JITTER'):
+        kwargs['max_local_timeout_jitter'] = settings.GARGOYLE_MAX_LOCAL_TIMEOUT_JITTER
 
     return SwitchManager(Switch, **kwargs)
 
