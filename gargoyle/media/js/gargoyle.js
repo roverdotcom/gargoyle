@@ -151,6 +151,8 @@ $(document).ready(function () {
 
             if ($(this).attr('type') == 'checkbox') {
                 val = $(this).is(':checked') ? '1' : '0';
+            } else if ($(this).attr('type') == 'radio' && !$(this).is(':checked')) {
+                return;
             } else {
                 val = $(this).val();
             }
