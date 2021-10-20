@@ -46,7 +46,7 @@ class SwitchManager(ModelDict):
         """
         default = kwargs.pop('default', False)
 
-        key_is_active_checked.send(sender=self, key=key)
+        key_is_active_checked.send(sender=self, key=key, **kwargs)
 
         # Check all parents for a disabled state
         parts = key.split(':')
