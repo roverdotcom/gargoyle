@@ -141,7 +141,7 @@ class Percent(Range):
     def is_active(self, condition, value):
         condition = list(map(int, condition.split('-')))
         mod = value % 100
-        return mod >= condition[0] and mod <= condition[1]
+        return condition[0] <= mod < condition[1]
 
     def display(self, value):
         value = value.split('-')
