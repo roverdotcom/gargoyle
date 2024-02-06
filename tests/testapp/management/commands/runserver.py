@@ -2,6 +2,7 @@
 Exists to ensure you can always log in with admin/password when running in
 'dev' mode - see tests/README.rst
 """
+
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from django.contrib.auth.models import User
@@ -16,10 +17,7 @@ class Command(BaseCommand):
         call_command('migrate', interactive=True)
 
         if not User.objects.exists():
-            self.stdout.write(
-                "Welcome to Gargoyle test mode\n"
-                "Login with username 'admin', password 'password'"
-            )
+            self.stdout.write("Welcome to Gargoyle test mode\n" "Login with username 'admin', password 'password'")
             user = User(username='admin', is_superuser=True, is_staff=True)
             user.set_password('password')
             user.save()

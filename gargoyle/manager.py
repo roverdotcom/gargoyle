@@ -123,7 +123,7 @@ class SwitchManager(ModelDict):
         else:
             registerable = condition_set
         popped = self._registry.pop(registerable.get_id(), None)
-        return (popped is not None)
+        return popped is not None
 
     def get_condition_set_by_id(self, switch_id):
         """

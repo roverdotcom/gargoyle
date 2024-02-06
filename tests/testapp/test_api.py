@@ -2,6 +2,7 @@
 :copyright: (c) 2010 DISQUS.
 :license: Apache License 2.0, see LICENSE for more details.
 """
+
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import datetime
@@ -154,12 +155,7 @@ class APITest(TestCase):
             field_name='username',
             condition='foo',
         )
-        switch.add_condition(
-            condition_set=condition_set,
-            field_name='username',
-            condition='bar',
-            exclude=True
-        )
+        switch.add_condition(condition_set=condition_set, field_name='username', condition='bar', exclude=True)
 
         user = User(pk=0, username='foo', is_staff=False)
         assert self.gargoyle.is_active('test', user)
@@ -181,12 +177,7 @@ class APITest(TestCase):
 
         # Intent is that this condition is True for all users *except* if the
         # username == bar
-        switch.add_condition(
-            condition_set=condition_set,
-            field_name='username',
-            condition='bar',
-            exclude=True
-        )
+        switch.add_condition(condition_set=condition_set, field_name='username', condition='bar', exclude=True)
 
         # username=='foo', so should be active
         user = User(pk=0, username='foo', is_staff=False)

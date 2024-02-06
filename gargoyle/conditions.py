@@ -83,7 +83,10 @@ class Choice(Field):
 
 class Range(Field):
     # Only Python 3 catches str being incomparable with int, do this whilst we support Python 2
-    integer_comparable_types = (int, float,)
+    integer_comparable_types = (
+        int,
+        float,
+    )
 
     def is_active(self, condition, value):
         if not isinstance(value, self.integer_comparable_types):
@@ -127,7 +130,7 @@ class Range(Field):
             '<input type="text" placeholder="to" value="{value_to}" name="{name}[max]"/>%',
             value_form=value[0],
             value_to=value[1],
-            name=self.name
+            name=self.name,
         )
 
     def display(self, value):
