@@ -45,7 +45,7 @@ class UserConditionSet(ModelConditionSet):
     def can_execute(self, instance):
         return isinstance(instance, (User, AnonymousUser))
 
-    def is_active(self, instance, conditions):
+    def is_active(self, instance, conditions):  # noqa: F811
         """
         value is the current value of the switch
         instance is the instance of our type
