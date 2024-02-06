@@ -6,8 +6,9 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from copy import deepcopy
 
-from .base import *  # noqa
 from .base import DATABASES, TEMPLATES
+
+from .base import *  # noqa
 
 DEBUG = False
 

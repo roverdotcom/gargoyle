@@ -6,7 +6,9 @@ Exists to ensure you can always log in with admin/password when running in
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from django.contrib.auth.models import User
-from django.contrib.staticfiles.management.commands.runserver import Command as BaseCommand
+from django.contrib.staticfiles.management.commands.runserver import (
+    Command as BaseCommand,
+)
 from django.core.management import call_command
 
 from gargoyle.models import SELECTIVE, Switch
