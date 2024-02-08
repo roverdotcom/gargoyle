@@ -11,16 +11,19 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('switch_name', type=str)
-        parser.add_argument('--disabled', dest='status', action='store_const',
-                            default=GLOBAL, const=DISABLED,
-                            help='Create a disabled switch.')
+        parser.add_argument(
+            '--disabled',
+            dest='status',
+            action='store_const',
+            default=GLOBAL,
+            const=DISABLED,
+            help='Create a disabled switch.',
+        )
 
     def handle(self, *args, **options):
         switch, created = Switch.objects.get_or_create(
             key=options['switch_name'],
-            defaults={
-                'status': options['status']
-            },
+            defaults={'status': options['status']},
         )
         if not created and switch.status != options['status']:
             switch.status = options['status']

@@ -24,12 +24,14 @@ class IfSwitchTests(BaseTemplateTagTests):
     def test_simple(self):
         Switch.objects.create(key='test', status=GLOBAL)
 
-        template = Template("""
+        template = Template(
+            """
             {% load gargoyle_tags %}
             {% ifswitch test %}
             hello world!
             {% endifswitch %}
-        """)
+        """
+        )
         rendered = template.render(Context())
 
         assert 'hello world!' in rendered
@@ -37,14 +39,16 @@ class IfSwitchTests(BaseTemplateTagTests):
     def test_else(self):
         Switch.objects.create(key='test', status=DISABLED)
 
-        template = Template("""
+        template = Template(
+            """
             {% load gargoyle_tags %}
             {% ifswitch test %}
             hello world!
             {% else %}
             foo bar baz
             {% endifswitch %}
-        """)
+        """
+        )
         rendered = template.render(Context())
 
         assert 'foo bar baz' in rendered
@@ -65,14 +69,16 @@ class IfSwitchTests(BaseTemplateTagTests):
         request = HttpRequest()
         request.user = self.user
 
-        template = Template("""
+        template = Template(
+            """
             {% load gargoyle_tags %}
             {% ifswitch test %}
             hello world!
             {% else %}
             foo bar baz
             {% endifswitch %}
-        """)
+        """
+        )
         rendered = template.render(Context({'request': request}))
 
         assert 'foo bar baz' not in rendered
@@ -80,12 +86,14 @@ class IfSwitchTests(BaseTemplateTagTests):
 
     def test_missing_name(self):
         with pytest.raises(TemplateSyntaxError):
-            Template("""
+            Template(
+                """
                 {% load gargoyle_tags %}
                 {% ifswitch %}
                 hello world!
                 {% endifswitch %}
-            """)
+            """
+            )
 
     def test_with_custom_objects(self):
         condition_set = 'gargoyle.builtins.UserConditionSet(auth.user)'
@@ -103,14 +111,16 @@ class IfSwitchTests(BaseTemplateTagTests):
         request.user = self.user
 
         # Pass in request.user explicitly.
-        template = Template("""
+        template = Template(
+            """
             {% load gargoyle_tags %}
             {% ifswitch test request.user %}
             hello world!
             {% else %}
             foo bar baz
             {% endifswitch %}
-        """)
+        """
+        )
         rendered = template.render(Context({'request': request}))
 
         assert 'foo bar baz' not in rendered
@@ -122,12 +132,14 @@ class IfNotSwitchTests(BaseTemplateTagTests):
     def test_simple(self):
         Switch.objects.create(key='test', status=GLOBAL)
 
-        template = Template("""
+        template = Template(
+            """
             {% load gargoyle_tags %}
             {% ifnotswitch test %}
             hello world!
             {% endifnotswitch %}
-        """)
+        """
+        )
         rendered = template.render(Context())
 
         assert 'hello world!' not in rendered
@@ -135,14 +147,16 @@ class IfNotSwitchTests(BaseTemplateTagTests):
     def test_else(self):
         Switch.objects.create(key='test', status=DISABLED)
 
-        template = Template("""
+        template = Template(
+            """
             {% load gargoyle_tags %}
             {% ifnotswitch test %}
             hello world!
             {% else %}
             foo bar baz
             {% endifnotswitch %}
-        """)
+        """
+        )
         rendered = template.render(Context())
 
         assert 'foo bar baz' not in rendered
@@ -163,14 +177,16 @@ class IfNotSwitchTests(BaseTemplateTagTests):
         request = HttpRequest()
         request.user = self.user
 
-        template = Template("""
+        template = Template(
+            """
             {% load gargoyle_tags %}
             {% ifnotswitch test %}
             hello world!
             {% else %}
             foo bar baz
             {% endifnotswitch %}
-        """)
+        """
+        )
         rendered = template.render(Context({'request': request}))
 
         assert 'foo bar baz' in rendered
@@ -178,12 +194,14 @@ class IfNotSwitchTests(BaseTemplateTagTests):
 
     def test_missing_name(self):
         with pytest.raises(TemplateSyntaxError):
-            Template("""
+            Template(
+                """
                 {% load gargoyle_tags %}
                 {% ifnotswitch %}
                 hello world!
                 {% endifnotswitch %}
-            """)
+            """
+            )
 
     def test_with_custom_objects(self):
         condition_set = 'gargoyle.builtins.UserConditionSet(auth.user)'
@@ -201,14 +219,16 @@ class IfNotSwitchTests(BaseTemplateTagTests):
         request.user = self.user
 
         # Pass in request.user explicitly.
-        template = Template("""
+        template = Template(
+            """
             {% load gargoyle_tags %}
             {% ifnotswitch test request.user %}
             hello world!
             {% else %}
             foo bar baz
             {% endifnotswitch %}
-        """)
+        """
+        )
         rendered = template.render(Context({'request': request}))
 
         assert 'foo bar baz' in rendered

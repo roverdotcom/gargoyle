@@ -6,7 +6,14 @@ import pytest
 from django.core.validators import ValidationError
 from django.test import TestCase
 
-from gargoyle.conditions import AbstractDate, BeforeDate, ConditionSet, OnOrAfterDate, Percent, Range
+from gargoyle.conditions import (
+    AbstractDate,
+    BeforeDate,
+    ConditionSet,
+    OnOrAfterDate,
+    Percent,
+    Range,
+)
 from gargoyle.manager import SwitchManager
 from gargoyle.models import SELECTIVE, Switch
 

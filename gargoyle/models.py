@@ -5,6 +5,7 @@ gargoyle.models
 :copyright: (c) 2010 DISQUS.
 :license: Apache License 2.0, see LICENSE for more details.
 """
+
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from django.conf import settings
@@ -54,19 +55,12 @@ class Switch(models.Model):
 
     class Meta:
         app_label = 'gargoyle'
-        permissions = (
-            ("can_view", "Can view"),
-        )
+        permissions = (("can_view", "Can view"),)
         verbose_name = _('switch')
         verbose_name_plural = _('switches')
 
     def __init__(self, *args, **kwargs):
-        if (
-            kwargs and
-            hasattr(settings, 'GARGOYLE_SWITCH_DEFAULTS') and
-            'key' in kwargs and
-            'status' not in kwargs
-        ):
+        if kwargs and hasattr(settings, 'GARGOYLE_SWITCH_DEFAULTS') and 'key' in kwargs and 'status' not in kwargs:
             key = kwargs['key']
             switch_default = settings.GARGOYLE_SWITCH_DEFAULTS.get(key)
             if switch_default is not None:
@@ -103,11 +97,7 @@ class Switch(models.Model):
                 if last:
                     data['conditions'].append(last)
 
-                last = {
-                    'id': condition_set_id,
-                    'label': group,
-                    'conditions': []
-                }
+                last = {'id': condition_set_id, 'label': group, 'conditions': []}
 
             last['conditions'].append((field.name, value, field.display(value), exclude))
         if last:

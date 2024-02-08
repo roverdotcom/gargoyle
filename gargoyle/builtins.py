@@ -5,6 +5,7 @@ gargoyle.builtins
 :copyright: (c) 2010 DISQUS.
 :license: Apache License 2.0, see LICENSE for more details.
 """
+
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import socket
@@ -19,7 +20,14 @@ from django.utils import timezone
 
 from gargoyle import gargoyle
 from gargoyle.conditions import (
-    BeforeDate, Boolean, ConditionSet, ModelConditionSet, OnOrAfterDate, Percent, RequestConditionSet, String
+    BeforeDate,
+    Boolean,
+    ConditionSet,
+    ModelConditionSet,
+    OnOrAfterDate,
+    Percent,
+    RequestConditionSet,
+    String,
 )
 
 User = get_user_model()
@@ -37,7 +45,7 @@ class UserConditionSet(ModelConditionSet):
     def can_execute(self, instance):
         return isinstance(instance, (User, AnonymousUser))
 
-    def is_active(self, instance, conditions):
+    def is_active(self, instance, conditions):  # noqa: F811
         """
         value is the current value of the switch
         instance is the instance of our type
@@ -118,6 +126,7 @@ class UTCTodayConditionSet(ConditionSet):
     """
     Checks conditions against current time in UTC
     """
+
     today_is_on_or_after = OnOrAfterDate('in UTC on or after')
     today_is_before = BeforeDate('in UTC before')
 
@@ -140,6 +149,7 @@ class AppTodayConditionSet(ConditionSet):
     Checks conditions against current app timezone time or
     against current server time if Django timezone support disabled (USE_TZ=False)
     """
+
     today_is_on_or_after = OnOrAfterDate('in default timezone on or after')
     today_is_before = BeforeDate('in default timezone before')
 
@@ -165,6 +175,7 @@ class ActiveTimezoneTodayConditionSet(ConditionSet):
     Checks conditions against current time of active timezone or
     against current server time if Django timezone support disabled (USE_TZ=False)
     """
+
     today_is_on_or_after = OnOrAfterDate('in active timezone on or after')
     today_is_before = BeforeDate('in active timezone before')
 

@@ -5,6 +5,7 @@ gargoyle.decorators
 :copyright: (c) 2010 DISQUS.
 :license: Apache License 2.0, see LICENSE for more details.
 """
+
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from functools import wraps
@@ -27,5 +28,7 @@ def switch_is_active(key, redirect_to=None, gargoyle=gargoyle):
                 else:
                     return HttpResponseRedirect(reverse(redirect_to))
             return func(request, *args, **kwargs)
+
         return wrapped
+
     return _switch_is_active
