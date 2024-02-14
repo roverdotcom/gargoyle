@@ -39,14 +39,9 @@ setup(
     zip_safe=False,
     install_requires=[
         'django-modeldict-yplan>=1.5.0',
-        'nexus-yplan>=1.2.0',
+        'nexus-yplan@https://github.com/roverdotcom/nexus/archive/3ec4808cf45b1c30e083f90ac1e33e9a3d0a7570.zip',  # noqa: E501
         'jsonfield>=3.1.0',
     ],
-    extras_require={
-        ':python_version=="2.7"': [
-            'contextdecorator',
-        ]
-    },
     license='Apache License 2.0',
     include_package_data=True,
     classifiers=[
