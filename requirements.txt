@@ -41,5 +41,8 @@ sqlparse==0.4.4
     # via -r requirements.in
 black==24.1.1
 
+# Nexus
+https://github.com/roverdotcom/nexus/archive/3ec4808cf45b1c30e083f90ac1e33e9a3d0a7570.zip
+
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
