@@ -33,8 +33,6 @@ pytest-django==4.8.0
     # via -r requirements.in
 python-dateutil==2.8.2
     # via freezegun
-pytz==2021.3
-    # via -r requirements.in
 six==1.10.0
     # via python-dateutil
 sqlparse==0.4.4
