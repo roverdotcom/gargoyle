@@ -2,12 +2,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import datetime
 import socket
-
-try:
-    import zoneinfo
-except ImportError:
-    # For python 3.8
-    from backports import zoneinfo
+import zoneinfo
 
 from django.test import RequestFactory, TestCase
 from django.test.utils import override_settings

@@ -6,6 +6,7 @@ gargoyle.conditions
 :copyright: (c) 2010 DISQUS.
 :license: Apache License 2.0, see LICENSE for more details.
 """
+
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import datetime
@@ -344,10 +345,7 @@ class ModelConditionSet(ConditionSet):
         return '%s.%s(%s)' % (self.__module__, self.__class__.__name__, self.get_namespace())
 
     def get_namespace(self):
-        if hasattr(self.model._meta, 'model_name'):
-            model_name = self.model._meta.model_name
-        else:
-            model_name = self.model._meta.module_name
+        model_name = self.model._meta.model_name
         return '%s.%s' % (self.model._meta.app_label, model_name)
 
     def get_group_label(self):

@@ -76,7 +76,7 @@ class Switch(models.Model):
 
         return super(Switch, self).__init__(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return u"%s=%s" % (self.key, self.value)
 
     def to_dict(self, manager):
