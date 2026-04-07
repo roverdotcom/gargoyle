@@ -1,12 +1,9 @@
+black
 docutils
 flake8
 freezegun>=1.1.0
 isort
-multilint
 Pygments
-pytz
 pytest
 pytest-cov
 pytest-django
-pytz
-sqlparse

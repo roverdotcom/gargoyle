@@ -38,8 +38,8 @@ setup(
     packages=find_packages(exclude=['tests', 'tests.*']),
     zip_safe=False,
     install_requires=[
-        'django-modeldict-yplan>=1.5.0',
-        'nexus-yplan@https://github.com/roverdotcom/nexus/archive/3ec4808cf45b1c30e083f90ac1e33e9a3d0a7570.zip',  # noqa: E501
+        'django-modeldict-yplan@https://github.com/roverdotcom/django-modeldict/archive/44fa0e8e54b4d58aee5678567bdccb32785b6630.zip',  # noqa: E501
+        'nexus-yplan@https://github.com/roverdotcom/nexus/archive/72859b2fae40f26f6a1cb3793a5de543d60ac71e.zip',  # noqa: E501
         'jsonfield>=3.1.0',
     ],
     license='Apache License 2.0',
@@ -47,21 +47,15 @@ setup(
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Framework :: Django',
-        'Framework :: Django :: 1.8',
-        'Framework :: Django :: 1.9',
-        'Framework :: Django :: 1.10',
-        'Framework :: Django :: 1.11',
+        'Framework :: Django :: 4.2',
+        'Framework :: Django :: 5.2',
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
         'License :: OSI Approved :: Apache Software License',
         'Natural Language :: English',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.11',
         'Programming Language :: Python',
         'Topic :: Software Development',
     ],
