@@ -13,7 +13,6 @@ import itertools
 
 from django.core.validators import ValidationError
 from django.http import HttpRequest
-from django.utils import six
 from django.utils.html import format_html
 
 from gargoyle.models import EXCLUDE
@@ -43,7 +42,7 @@ class Field(object):
         value = data.get(self.name)
         if value:
             value = self.clean(value)
-            assert isinstance(value, six.string_types), 'clean methods must return strings'
+            assert isinstance(value, str), 'clean methods must return strings'
         return value
 
     def clean(self, value):
@@ -84,7 +83,10 @@ class Choice(Field):
 
 class Range(Field):
     # Only Python 3 catches str being incomparable with int, do this whilst we support Python 2
-    integer_comparable_types = six.integer_types + (float,)
+    integer_comparable_types = (
+        int,
+        float,
+    )
 
     def is_active(self, condition, value):
         if not isinstance(value, self.integer_comparable_types):
@@ -117,7 +119,7 @@ class Range(Field):
         if not len(bounds) == 2:
             raise error
 
-        return '-'.join(six.text_type(x) for x in bounds)
+        return '-'.join(str(x) for x in bounds)
 
     def render(self, value):
         if not value:
@@ -128,7 +130,7 @@ class Range(Field):
             '<input type="text" placeholder="to" value="{value_to}" name="{name}[max]"/>%',
             value_form=value[0],
             value_to=value[1],
-            name=self.name
+            name=self.name,
         )
 
     def display(self, value):
@@ -142,7 +144,7 @@ class Percent(Range):
     def is_active(self, condition, value):
         condition = list(map(int, condition.split('-')))
         mod = value % 100
-        return mod >= condition[0] and mod <= condition[1]
+        return condition[0] <= mod < condition[1]
 
     def display(self, value):
         value = value.split('-')
@@ -181,7 +183,7 @@ class AbstractDate(Field):
         try:
             date = self.str_to_date(value)
         except ValueError as e:
-            raise ValidationError("Date must be a valid date in the format YYYY-MM-DD.\n(%s)" % six.text_type(e))
+            raise ValidationError("Date must be a valid date in the format YYYY-MM-DD.\n(%s)" % str(e))
 
         return date.strftime(self.DATE_FORMAT)
 
@@ -227,7 +229,7 @@ class ConditionSetBase(type):
             if fields:
                 attrs['fields'].update(fields)
 
-        for field_name, obj in list(six.iteritems(attrs)):
+        for field_name, obj in list(attrs.items()):
             if isinstance(obj, Field):
                 field = attrs.pop(field_name)
                 field.set_values(field_name)
@@ -238,7 +240,7 @@ class ConditionSetBase(type):
         return instance
 
 
-class ConditionSet(six.with_metaclass(ConditionSetBase)):
+class ConditionSet(metaclass=ConditionSetBase):
 
     def __repr__(self):
         return '<%s>' % (self.__class__.__name__,)
@@ -303,7 +305,7 @@ class ConditionSet(six.with_metaclass(ConditionSetBase)):
         a boolean representing if the feature is active.
         """
         return_value = None
-        for name, field in six.iteritems(self.fields):
+        for name, field in self.fields.items():
             field_conditions = conditions.get(self.get_namespace(), {}).get(name)
             if field_conditions:
                 value = self.get_field_value(instance, name)

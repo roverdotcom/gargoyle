@@ -5,13 +5,13 @@ gargoyle.models
 :copyright: (c) 2010 DISQUS.
 :license: Apache License 2.0, see LICENSE for more details.
 """
+
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from django.conf import settings
 from django.db import models
-from django.utils import six
 from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from jsonfield import JSONField
 
 from .constants import DISABLED, EXCLUDE, GLOBAL, INCLUDE, INHERIT, SELECTIVE
@@ -46,7 +46,7 @@ class Switch(models.Model):
     }
 
     key = models.CharField(max_length=64, primary_key=True)
-    value = JSONField()
+    value = JSONField(default=dict)
     label = models.CharField(max_length=64, null=True)
     date_created = models.DateTimeField(default=now)
     date_modified = models.DateTimeField(auto_now=True)
@@ -55,19 +55,12 @@ class Switch(models.Model):
 
     class Meta:
         app_label = 'gargoyle'
-        permissions = (
-            ("can_view", "Can view"),
-        )
+        permissions = (("can_view", "Can view"),)
         verbose_name = _('switch')
         verbose_name_plural = _('switches')
 
     def __init__(self, *args, **kwargs):
-        if (
-            kwargs and
-            hasattr(settings, 'GARGOYLE_SWITCH_DEFAULTS') and
-            'key' in kwargs and
-            'status' not in kwargs
-        ):
+        if kwargs and hasattr(settings, 'GARGOYLE_SWITCH_DEFAULTS') and 'key' in kwargs and 'status' not in kwargs:
             key = kwargs['key']
             switch_default = settings.GARGOYLE_SWITCH_DEFAULTS.get(key)
             if switch_default is not None:
@@ -104,11 +97,7 @@ class Switch(models.Model):
                 if last:
                     data['conditions'].append(last)
 
-                last = {
-                    'id': condition_set_id,
-                    'label': group,
-                    'conditions': []
-                }
+                last = {'id': condition_set_id, 'label': group, 'conditions': []}
 
             last['conditions'].append((field.name, value, field.display(value), exclude))
         if last:
@@ -128,7 +117,7 @@ class Switch(models.Model):
         """
         condition_set = manager.get_condition_set_by_id(condition_set)
 
-        assert isinstance(condition, six.string_types), 'conditions must be strings'
+        assert isinstance(condition, str), 'conditions must be strings'
 
         namespace = condition_set.get_namespace()
 
@@ -220,7 +209,7 @@ class Switch(models.Model):
             condition_set_id = condition_set.get_id()
             if ns in self.value:
                 group = condition_set.get_group_label()
-                for name, field in six.iteritems(condition_set.fields):
+                for name, field in condition_set.fields.items():
                     for value in self.value[ns].get(name, []):
                         try:
                             yield condition_set_id, group, field, value[1], value[0] == EXCLUDE

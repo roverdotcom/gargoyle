@@ -1,13 +1,11 @@
-# -*- encoding:utf-8 -*-
-from __future__ import absolute_import, division, print_function, unicode_literals
+from __future__ import absolute_import, division, print_function
+
+import io
 
 from django.core.management import call_command
 
 
 def test_no_migrations_required(db):
-    try:
-        call_command('makemigrations', 'gargoyle', exit=1)
-    except SystemExit:
-        pass
-    else:
-        assert False, "Migrations required"
+    stdout = io.StringIO()
+    call_command('makemigrations', 'gargoyle', stdout=stdout)
+    assert stdout.getvalue() == "No changes detected in app 'gargoyle'\n"

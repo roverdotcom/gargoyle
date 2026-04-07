@@ -6,7 +6,14 @@ import pytest
 from django.core.validators import ValidationError
 from django.test import TestCase
 
-from gargoyle.conditions import AbstractDate, BeforeDate, ConditionSet, OnOrAfterDate, Percent, Range
+from gargoyle.conditions import (
+    AbstractDate,
+    BeforeDate,
+    ConditionSet,
+    OnOrAfterDate,
+    Percent,
+    Range,
+)
 from gargoyle.manager import SwitchManager
 from gargoyle.models import SELECTIVE, Switch
 
@@ -109,6 +116,41 @@ class PercentTests(TestCase):
         condition = Percent()
         with pytest.raises(ValidationError):
             condition.clean('80-20')
+
+    def test_is_active_range_is_inclusive_on_lower_bound_and_exclusive_on_upper_bound(self):
+        condition = Percent()
+
+        # 0-10 should only be True for value % 100 < 10
+        assert condition.is_active('0-10', 0)
+        assert condition.is_active('0-10', 9)
+        assert not condition.is_active('0-10', 10)
+        assert not condition.is_active('0-10', 99)
+        assert condition.is_active('0-10', 100)
+        assert condition.is_active('0-10', 109)
+        assert not condition.is_active('0-10', 110)
+
+        # 90-100 should only be True for value % 100 >= 90
+        assert not condition.is_active('90-100', 0)
+        assert not condition.is_active('90-100', 89)
+        assert condition.is_active('90-100', 90)
+        assert condition.is_active('90-100', 99)
+        assert not condition.is_active('90-100', 100)
+        assert not condition.is_active('90-100', 189)
+        assert condition.is_active('90-100', 190)
+
+    def test_is_active_for_float_values(self):
+        condition = Percent()
+        assert not condition.is_active('10-20', 9.9999)
+        assert condition.is_active('10-20', 10.0)
+        assert condition.is_active('10-20', 10.0001)
+        assert condition.is_active('10-20', 19.9999)
+        assert not condition.is_active('10-20', 20.0)
+        assert not condition.is_active('10-20', 20.0001)
+        assert not condition.is_active('10-20', 99.9999)
+        assert not condition.is_active('10-20', 100.0)
+        assert not condition.is_active('10-20', 109.9999)
+        assert condition.is_active('10-20', 110.0)
+        assert condition.is_active('10-20', 110.0001)
 
 
 class AbstractDateTests(TestCase):

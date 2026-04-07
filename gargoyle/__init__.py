@@ -5,6 +5,7 @@ gargoyle
 :copyright: (c) 2010 DISQUS.
 :license: Apache License 2.0, see LICENSE for more details.
 """
+
 from __future__ import absolute_import, division, print_function
 
 from django.utils.module_loading import autodiscover_modules
@@ -16,8 +17,6 @@ VERSION = __version__  # old version compat
 
 __all__ = ('gargoyle', 'autodiscover', '__version__', 'VERSION')
 
-default_app_config = 'gargoyle.apps.GargoyleAppConfig'
-
 
 def autodiscover():
     """
@@ -26,4 +25,5 @@ def autodiscover():
     may want.
     """
     import gargoyle.builtins  # noqa
+
     autodiscover_modules('gargoyle')
