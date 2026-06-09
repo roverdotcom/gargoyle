@@ -39,7 +39,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'django-modeldict-yplan@https://github.com/roverdotcom/django-modeldict/archive/44fa0e8e54b4d58aee5678567bdccb32785b6630.zip',  # noqa: E501
-        'nexus-yplan@https://github.com/roverdotcom/nexus/archive/72859b2fae40f26f6a1cb3793a5de543d60ac71e.zip',  # noqa: E501
+        'nexus-yplan',
         'jsonfield>=3.1.0',
     ],
     license='Apache License 2.0',
